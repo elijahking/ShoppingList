@@ -9,6 +9,8 @@
 <input placeholder="Grocery Price" @bind="groceryPrice"/>
 <button @onclick="AddGrocery">Add Grocery</button>
 
+@*example of one way binding using the @ sign*@
+<h2>Total Price: $@sum</h2>
 
 <ul>
     @foreach(var item in groceries)
@@ -20,12 +22,24 @@
 
 
 @code {
+    private decimal sum;
     private string groceryName = "";
-    private float groceryPrice;
+    private decimal groceryPrice;
     private List<GroceryItem> groceries = new();
 
     private void AddGrocery()
     {
-        
+        if(!string.IsNullOrWhiteSpace(groceryName) 
+            && groceryPrice > 0)
+        {
+            groceries.Add(new GroceryItem
+                {
+                    Name = groceryName,
+                    Price = groceryPrice
+                });
+            sum += groceryPrice;
+            groceryName = "";
+            groceryPrice = 0;
+        }
     }
 }
