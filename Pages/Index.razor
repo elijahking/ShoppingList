@@ -1,0 +1,31 @@
+﻿@page "/"
+@using ShoppingList.Data
+
+<PageTitle>ShoppingList</PageTitle>
+
+<h1>Shopping List</h1>
+
+<input placeholder="Grocery Name" @bind="groceryName"/>
+<input placeholder="Grocery Price" @bind="groceryPrice"/>
+<button @onclick="AddGrocery">Add Grocery</button>
+
+
+<ul>
+    @foreach(var item in groceries)
+    {
+        <li>@item.Name -- @item.Price</li>
+    }
+</ul>
+
+
+
+@code {
+    private string groceryName = "";
+    private float groceryPrice;
+    private List<GroceryItem> groceries = new();
+
+    private void AddGrocery()
+    {
+        
+    }
+}
