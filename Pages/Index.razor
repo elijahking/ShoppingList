@@ -5,9 +5,23 @@
 
 <h1>Shopping List</h1>
 
-<input placeholder="Grocery Name" @bind="groceryName"/>
-<input placeholder="Grocery Price" @bind="groceryPrice"/>
-<button @onclick="AddGrocery">Add Grocery</button>
+<EditForm Model="@groceryItem" OnValidSubmit="AddGrocery">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <p>
+        <label>
+            Name:
+            <InputText @bind-Value="groceryItem.Name"/>
+        </label>
+    </p>
+    <p>
+        <label>
+            Price:
+            <InputNumber @bind-Value="groceryItem.Price" />
+        </label>
+    </p>
+    <button type="submit">Add Grocery</button>
+</EditForm>
 
 @*example of one way binding using the @ sign*@
 <h2>Total Price: $@sum</h2>
@@ -21,25 +35,15 @@
 </table>
 
 @code {
-    private decimal sum;
-    private string groceryName = string.Empty;
-    private decimal groceryPrice;
     private List<GroceryItem> groceries = new();
+    private decimal sum;
+    private GroceryItem groceryItem = new();
 
     private void AddGrocery()
     {
-        if(!string.IsNullOrWhiteSpace(groceryName) 
-            && groceryPrice > 0)
-        {
-            groceries.Add(new GroceryItem
-                {
-                    Name = groceryName,
-                    Price = groceryPrice
-                });
-            UpdateTotal();
-            groceryName = string.Empty;
-            groceryPrice = 0;
-        }
+        groceries.Add(groceryItem);
+        groceryItem = new();
+        UpdateTotal();
     }
 
     public void UpdateTotal()
