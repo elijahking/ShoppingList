@@ -1,0 +1,25 @@
+﻿@using ShoppingList.Data
+<tr>
+    <td>@GroceryItem.Name</td>
+    <td>@GroceryItem.Price</td>
+    <td>
+        <button class="btn-sm float-right" @onclick="IncreasePrice">
+            +$
+        </button>
+    </td>
+</tr>
+
+
+@code {
+    [Parameter]
+    public GroceryItem GroceryItem { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnIncrease { get; set; }
+
+    private async Task IncreasePrice()
+    {
+        GroceryItem.Price += 1;
+        await OnIncrease.InvokeAsync();
+    }
+}

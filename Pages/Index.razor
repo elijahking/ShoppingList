@@ -12,18 +12,17 @@
 @*example of one way binding using the @ sign*@
 <h2>Total Price: $@sum</h2>
 
-<ul>
-    @foreach(var item in groceries)
+<table>
+    <tr><th>Name</th><th>Price</th><th></th></tr>
+    @foreach(var grocery in groceries)
     {
-        <li>@item.Name -- @item.Price</li>
+        <Item GroceryItem="@grocery" OnIncrease="UpdateTotal"/>
     }
-</ul>
-
-
+</table>
 
 @code {
     private decimal sum;
-    private string groceryName = "";
+    private string groceryName = string.Empty;
     private decimal groceryPrice;
     private List<GroceryItem> groceries = new();
 
@@ -37,9 +36,14 @@
                     Name = groceryName,
                     Price = groceryPrice
                 });
-            sum += groceryPrice;
-            groceryName = "";
+            UpdateTotal();
+            groceryName = string.Empty;
             groceryPrice = 0;
         }
+    }
+
+    public void UpdateTotal()
+    {
+        sum = groceries.Sum(g => g.Price);
     }
 }
