@@ -1,0 +1,35 @@
+﻿@page "/converter"
+
+<h3>Converter</h3>
+
+<label>Pounds</label>
+
+<input type="number" @bind="@Pounds" @bind:event="oninput" />
+<span> = </span>
+<input type="number" @bind="@Ounces" @bind:event="oninput" />
+<label>Ounces</label>
+
+@code {
+    private double pounds = 1;
+    private double ounces = 16;
+
+    public double Pounds 
+    { 
+        get => pounds; 
+        set
+        {
+            ounces = value * 16;
+            pounds = value;
+        }
+    }
+
+    public double Ounces
+    { 
+        get => ounces;
+        set
+        {
+            pounds = value / 16;
+            ounces = value;
+        }
+    }
+}
